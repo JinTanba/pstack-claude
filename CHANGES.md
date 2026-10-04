@@ -2,6 +2,20 @@
 
 This file is the release changelog, with one `## <version> - <title>` entry per release, newest first. The Cursor-to-Claude rewrite rules live in [`tools/substitutions.json`](tools/substitutions.json), and the [sync boundary](CONTRIBUTING.md#the-sync-boundary) in `CONTRIBUTING.md` defines how a change to upstream's skill content is declared.
 
+## 0.9.67 - restore poteto's positions the port had reversed
+
+This fork keeps every Claude Code adaptation and every port addition, but restores upstream's wording in the four places where the port had reversed a position poteto states. Each change is a revert to upstream text, not new guidance.
+
+- `principle-test-behavior-not-implementation` returns to upstream's form: the every-import-returns-`undefined` check, absence paired with presence in the same test, and no constant pins. The file now equals the port's derivation of upstream, so its `tools/forks.json` entry is gone.
+- `principle-attack-the-premise` returns to upstream's form: the census comes before the next fix, and the fix removes the asymmetry instead of compensating for it. Its fork entry is gone for the same reason.
+- `session-pickup` again treats the prior trail as authoritative input and names a verify-from-scratch pass as the bias to resist. The project checkpoint read and the human-rulings pointer stay, so the fork entry stays.
+- `autopilot-full` again has each owner merge on a clean swarm verdict, under the operator's full-autonomy grant. Operator-named items still stop at merge-ready. What remains forked is Claude Code mechanics only (standing orders in place of `/goal`, a dynamic `/loop` tick, `CLAUDE.md`, the driver skill), so the entry moves from `policy` to `port-feature`.
+- The `poteto-mode` Principles index and Playbooks line match the restored files.
+
+`tests/poteto-fidelity.test.mjs` pins eleven of poteto's sentences in these files. All eleven failed before the revert and pass after it. A failure after merging the port means its rewrite came back; a failure after an upstream sync means poteto changed the sentence, and the pin should take his new wording.
+
+Verified: `bun test tests/` 586 pass, 29 skip, 0 fail; `bun tools/generate.mjs --check` passes; `bun tools/sync.mjs pstack e43c7ee --dry-run` exits 0 with no undeclared fork (its one warning, about `watch-pr/transport.test.ts`, predates this change). A `claude -p --plugin-dir` session loaded the restored principle and quoted upstream's sentence. The behavioral leg in `tests/skill-collision-repro.sh` was not run.
+
 ## 0.9.66 - Windows Codex SessionStart hook
 
 The Codex plugin's `SessionStart` hook now runs on Windows. `codex-hooks.json` adds a `commandWindows` override that runs `session-start.ps1` through PowerShell, so Windows Codex loads the routing instruction without Bash (#171). Windows users must trust the changed hook again through `/hooks`.
